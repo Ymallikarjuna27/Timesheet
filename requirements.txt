@@ -1,0 +1,7 @@
+streamlit
+pandas
+openai
+tiktoken
+plotly
+requests
+openpyxl
