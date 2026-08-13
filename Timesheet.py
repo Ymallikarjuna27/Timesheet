@@ -931,7 +931,15 @@ def load_replicon(file):
     """Load the Replicon dump into a DataFrame. Sheet is 'Sheet1' with
     headers on row 1. Employee name, date, and hours columns are renamed
     to the internal standard names used throughout the rest of the app."""
-    df = pd.read_excel(file, sheet_name="Sheet1")
+    # df = pd.read_excel(file, sheet_name="Sheet1")
+    xls = pd.ExcelFile(file)
+    if "Sheet1" in xls.sheet_names:
+        sheet_to_use = "Sheet1"
+    else:
+        sheet_to_use = xls.sheet_names[0]
+        st.warning(f"Replicon file has no sheet named 'Sheet1' — using the first sheet found: '{sheet_to_use}'.")
+    df = pd.read_excel(file, sheet_name=sheet_to_use)
+    
     df = df.dropna(subset=["Employee Name"])
 
     # Drop exact duplicate line items: same Exp. Item Id AND same
