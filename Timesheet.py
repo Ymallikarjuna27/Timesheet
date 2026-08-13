@@ -1082,7 +1082,7 @@ def fill_timesheet_for_employee(template_bytes, res_row, daily_hours, neg_set, m
     emp_hours = daily_hours[
         (daily_hours["name_key"] == name_key) &
         # (daily_hours["Project Number"].astype(str).str.strip() == sow_project_code)
-        daily_hours["Project Number"].astype(str).str.strip().str.replace(r"\.0$", "", regex=True) == sow_project_code
+        (daily_hours["Project Number"].astype(str).str.strip().str.replace(r"\.0$", "", regex=True) == sow_project_code)
     ].set_index("Item Date")["Quantity"]
     days_in_month = calendar.monthrange(year, month)[1]
     date_number_format = ws["B14"].number_format  # capture template's date format before overwriting
